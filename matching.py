@@ -9,21 +9,21 @@ from matplotlib import pyplot as plt
 pair_number = 20
 stat_num = 7 #std, var, max, skew, median(fft), mean(fft), var(fft)
 #data
-rw_data = np.empty((pair_number))
-rd_data = np.empty((pair_number))
-rw_stat = np.empty((pair_number,stat_num))
-rd_stat = np.empty((pair_number,stat_num))
-rw_stat_8_split = np.empty((pair_number,stat_num,8))
-rd_stat_8_split = np.empty((pair_number,stat_num,8))
-rw_block = np.empty((8))
-rd_block = np.empty((8))
+rw_data = [[] for i in range(pair_number)]
+rd_data = [[] for i in range(pair_number)]
+rw_stat = [[[] for i in range(pair_number)] for j in range(stat_num)]
+rd_stat = [[[] for i in range(pair_number)] for j in range(stat_num)]
+rw_stat_8_split = [[[[] for i in range(pair_number)] for j in range(8)] for k in range(stat_num)]
+rd_stat_8_split = [[[[] for i in range(pair_number)] for j in range(8)] for k in range(stat_num)]
+rw_block = [[] for i in range(8)]
+rd_block = [[] for i in range(8)]
 
 #read data
 for i in range(pair_number):
     rawscienceframe = pyfits.open('rw_imdata/rw'+str(i+1)+'.fits')
     reducedscienceframe = pyfits.open('rd_imdata/rd'+str(i+1)+'.fits')
-    rw_data[i] = np.asarray(rawscienceframe[0].data)
-    rd_data[i] = np.asarray(reducescienceframe[0].data)
+    rw_data[i] = np.array(rawscienceframe[0].data)
+    rd_data[i] = np.array(reducescienceframe[0].data)
     rawscienceframe.close()
     reducedscienceframe.close()
 
@@ -94,7 +94,4 @@ for i in range(pair_number):
 #apply machinelearning
 #classify = neural_network.MLPClassifier(solver = 'lbfgs', alpha = 1e-10, hidden_layer_sizes = (100,100), random_state=1)
 #for p in range(20):#per product
-#    output[p] = 1
-#    for i in range(20):#per source
-#        static_train_data[i] = [(s_static[i][j]-p_static[p][j])/(s_static[i][j]) for j in range(8)]
-#    classify.fit(static_train_data,output)
+#  
