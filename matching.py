@@ -22,8 +22,8 @@ rd_block = np.empty((8))
 for i in range(pair_number):
     rawscienceframe = pyfits.open('rw_imdata/rw'+str(i+1)+'.fits')
     reducedscienceframe = pyfits.open('rd_imdata/rd'+str(i+1)+'.fits')
-    rw_data[i] = rawscienceframe[0].data
-    rd_data[i] = reducescienceframe[0].data
+    rw_data[i] = np.asarray(rawscienceframe[0].data)
+    rd_data[i] = np.asarray(reducescienceframe[0].data)
     rawscienceframe.close()
     reducedscienceframe.close()
 
@@ -98,4 +98,3 @@ for i in range(pair_number):
 #    for i in range(20):#per source
 #        static_train_data[i] = [(s_static[i][j]-p_static[p][j])/(s_static[i][j]) for j in range(8)]
 #    classify.fit(static_train_data,output)
-#  
