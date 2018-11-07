@@ -11,10 +11,10 @@ stat_num = 7 #std, var, max, skew, median(fft), mean(fft), var(fft)
 #data
 rw_data = [[] for i in range(pair_number)]
 rd_data = [[] for i in range(pair_number)]
-rw_stat = [[[] for i in range(pair_number)] for j in range(stat_num)]
-rd_stat = [[[] for i in range(pair_number)] for j in range(stat_num)]
-rw_stat_8_split = [[[[] for i in range(pair_number)] for j in range(8)] for k in range(stat_num)]
-rd_stat_8_split = [[[[] for i in range(pair_number)] for j in range(8)] for k in range(stat_num)]
+rw_stat = [[[] for i in range(stat_num)] for j in range(pair_number)]
+rd_stat = [[[] for i in range(stat_num)] for j in range(pair_number)]
+rw_stat_8_split = [[[[] for i in range(stat_num)] for j in range(8)] for k in range(pair_number)]
+rd_stat_8_split = [[[[] for i in range(stat_num)] for j in range(8)] for k in range(pair_number)]
 rw_block = [[] for i in range(8)]
 rd_block = [[] for i in range(8)]
 
@@ -68,18 +68,35 @@ for i in range(pair_number):
     rd_stat[i][5] = np.mean(fft)
     rd_stat[i][6] = np.nanvar(fft)
 
-    rd_row = len(rd_data[i])
-    rd_column = len(rd_data[i][0])
+    rd_row = len(rd_data[i][0])
+    rd_column = len(rd_data[i])
     rd_block[0] = rd_data[i][0:rd_column/2][0:rd_row/4]
+    print('1')
+    print(rd_block[0])
     rd_block[1] = rd_data[i][rd_column/2:rd_column][0:rd_row/4]
+    print('1')    
+    print(rd_block[1])
     rd_block[2] = rd_data[i][0:rd_column/2][rd_row/4:rd_row/2]
+    print('1')
+    print(rd_block[2])
     rd_block[3] = rd_data[i][rd_column/2:rd_column][rd_row/4:rd_row/2]
+    print('1')
+    print(rd_block[3])
     rd_block[4] = rd_data[i][0:rd_column/2][rd_row/2:(3*rd_row)/4]
+    print('1')
+    print(rd_block[4])
     rd_block[5] = rd_data[i][rd_column/2:rd_column][rd_row/2:(3*rd_row)/4]
+    print('1')
+    print(rd_block[5])
     rd_block[6] = rd_data[i][0:rd_column/2][(3*rd_row)/4:rd_row]
+    print('1')
+    print(rd_block[6])
     rd_block[7] = rd_data[i][rd_column/2:rd_column][(3*rd_row)/4:rd_row]
+    print('1')
+    print(rd_block[7])
 
     for j in range(8):
+        print('j time:',j)
         rd_stat_8_split[i][j][0] = np.nanstd(rd_block[j])
         rd_stat_8_split[i][j][1] = np.nanvar(rd_block[j])
         rd_stat_8_split[i][j][2] = np.nanmax(rd_block[j])
@@ -88,3 +105,12 @@ for i in range(pair_number):
         rd_stat_8_split[i][j][4] = np.median(fft)
         rd_stat_8_split[i][j][5] = np.mean(fft)
         rd_stat_8_split[i][j][6] = np.nanvar(fft)
+
+plt.figure(1)
+for i in range(8):
+    for j in range(7):
+        plt.subplot(8,7,j+1+i*7)
+        plt.plot([rw_stat_8_split[k][i][j] for k in range(20)], 'blue')
+        plt.plot([rd_stat_8_split[k][i][j] for k in range(20)], 'red')
+
+plt.show()
