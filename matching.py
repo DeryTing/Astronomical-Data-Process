@@ -37,4 +37,16 @@ for i in range(pair_number):
     rw_stat[i][5] = np.mean(fft)
     rw_stat[i][6] = np.nanvar(fft)
 
-    
+    rw_row = len(rw_data[i])
+    rw_column = len(rw_data[i][0]) 
+    rw_block_1 = rw_data[i][0:rw_row/4][0:rw_column/2]
+    rw_block_2 = rw_data[i][0:rw_row/4][rw_column/2:rw_column]
+    rw_block_3 = rw_data[i][rw_row/4:rw_row/2][0:rw_column/2]
+    rw_block_4 = rw_data[i][rw_row/4:rw_row/2][rw_column/2:rw_column]
+    rw_block_5 = rw_data[i][rw_row/2:(3*rw_row)/4][0:rw_column/2]
+    rw_block_6 = rw_data[i][rw_row/2:(3*rw_row)/4][rw_column/2:rw_column]
+    rw_block_7 = rw_data[i][(3*rw_row)/4:rw_row][0:rw_column/2]
+    rw_block_8 = rw_data[i][(3*rw_row)/4:rw_row][rw_column/2:rw_column]
+                
+    for j in range(8):
+        rw_stat_8_split[i][j][0] = 
