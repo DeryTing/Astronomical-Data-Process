@@ -16,6 +16,8 @@ rw_stat = np.array.empty((pair_number,stat_num))
 rd_stat = np.array.empty((pair_number,stat_num))
 rw_stat_8_split = np.array.empty((pair_number,stat_num,8))
 rd_stat_8_split = np.array.empty((pair_number,stat_num,8))
+rw_block = np.array.empty((8))
+rd_block = np.array.empty((8))
 
 #read data
 for i in range(pair_number):
@@ -39,14 +41,22 @@ for i in range(pair_number):
 
     rw_row = len(rw_data[i])
     rw_column = len(rw_data[i][0]) 
-    rw_block_1 = rw_data[i][0:rw_row/4][0:rw_column/2]
-    rw_block_2 = rw_data[i][0:rw_row/4][rw_column/2:rw_column]
-    rw_block_3 = rw_data[i][rw_row/4:rw_row/2][0:rw_column/2]
-    rw_block_4 = rw_data[i][rw_row/4:rw_row/2][rw_column/2:rw_column]
-    rw_block_5 = rw_data[i][rw_row/2:(3*rw_row)/4][0:rw_column/2]
-    rw_block_6 = rw_data[i][rw_row/2:(3*rw_row)/4][rw_column/2:rw_column]
-    rw_block_7 = rw_data[i][(3*rw_row)/4:rw_row][0:rw_column/2]
-    rw_block_8 = rw_data[i][(3*rw_row)/4:rw_row][rw_column/2:rw_column]
+    rw_block[0] = rw_data[i][0:rw_row/4][0:rw_column/2]
+    rw_block[1] = rw_data[i][0:rw_row/4][rw_column/2:rw_column]
+    rw_block[2] = rw_data[i][rw_row/4:rw_row/2][0:rw_column/2]
+    rw_block[3] = rw_data[i][rw_row/4:rw_row/2][rw_column/2:rw_column]
+    rw_block[4] = rw_data[i][rw_row/2:(3*rw_row)/4][0:rw_column/2]
+    rw_block[5] = rw_data[i][rw_row/2:(3*rw_row)/4][rw_column/2:rw_column]
+    rw_block[6] = rw_data[i][(3*rw_row)/4:rw_row][0:rw_column/2]
+    rw_block[7] = rw_data[i][(3*rw_row)/4:rw_row][rw_column/2:rw_column]
                 
     for j in range(8):
-        rw_stat_8_split[i][j][0] = 
+        rw_stat_8_split[i][j][0] = np.nanstd(rw_block[j])
+        rw_stat_8_split[i][j][1] = np.nanvar(rw_block[j])
+        rw_stat_8_split[i][j][2] = np.nanmax(rw_block[j])
+        rw_stat_8_split[i][j][3] = scipy.stats.skew(rw_block[j].ravel())
+        fft = np.abs(np.fft.fft2(rw_block[j]))
+        rw_stat_8_split[i][j][4] = np.median(fft)
+        rw_stat_8_split[i][j][5] = np.mean(fft)
+        rw_stat_8_split[i][j][6] = np.nanvar(fft)
+#plot statistics    
