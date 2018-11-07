@@ -40,14 +40,14 @@ for i in range(pair_number):
 
     rw_row = len(rw_data[i])
     rw_column = len(rw_data[i][0])
-    rw_block[0] = rw_data[i][0:rw_row/4][0:rw_column/2]
+    rw_block[0] = rw_data[i][0:rw_column/2][0:rw_row/4]
     rw_block[1] = rw_data[i][0:rw_row/4][rw_column/2:rw_column]
-    rw_block[2] = rw_data[i][rw_row/4:rw_row/2][0:rw_column/2]
-    rw_block[3] = rw_data[i][rw_row/4:rw_row/2][rw_column/2:rw_column]
-    rw_block[4] = rw_data[i][rw_row/2:(3*rw_row)/4][0:rw_column/2]
-    rw_block[5] = rw_data[i][rw_row/2:(3*rw_row)/4][rw_column/2:rw_column]
-    rw_block[6] = rw_data[i][(3*rw_row)/4:rw_row][0:rw_column/2]
-    rw_block[7] = rw_data[i][(3*rw_row)/4:rw_row][rw_column/2:rw_column]
+    rw_block[2] = rw_data[i][0:rw_column/2][rw_row/4:rw_row/2]
+    rw_block[3] = rw_data[i][rw_column/2:rw_column][rw_row/4:rw_row/2]
+    rw_block[4] = rw_data[i][0:rw_column/2][rw_row/2:(3*rw_row)/4]
+    rw_block[5] = rw_data[i][rw_column/2:rw_column][rw_row/2:(3*rw_row)/4]
+    rw_block[6] = rw_data[i][0:rw_column/2][(3*rw_row)/4:rw_row]
+    rw_block[7] = rw_data[i][rw_column/2:rw_column][(3*rw_row)/4:rw_row]
 
     for j in range(8):
         rw_stat_8_split[i][j][0] = np.nanstd(rw_block[j])
@@ -70,14 +70,14 @@ for i in range(pair_number):
 
     rd_row = len(rd_data[i])
     rd_column = len(rd_data[i][0])
-    rd_block[0] = rd_data[i][0:rd_row/4][0:rd_column/2]
-    rd_block[1] = rd_data[i][0:rd_row/4][rd_column/2:rd_column]
-    rd_block[2] = rd_data[i][rd_row/4:rd_row/2][0:rd_column/2]
-    rd_block[3] = rd_data[i][rd_row/4:rd_row/2][rd_column/2:rd_column]
-    rd_block[4] = rd_data[i][rd_row/2:(3*rd_row)/4][0:rd_column/2]
-    rd_block[5] = rd_data[i][rd_row/2:(3*rd_row)/4][rd_column/2:rd_column]
-    rd_block[6] = rd_data[i][(3*rd_row)/4:rd_row][0:rd_column/2]
-    rd_block[7] = rd_data[i][(3*rd_row)/4:rd_row][rd_column/2:rd_column]
+    rd_block[0] = rd_data[i][0:rd_column/2][0:rd_row/4]
+    rd_block[1] = rd_data[i][rd_column/2:rd_column][0:rd_row/4]
+    rd_block[2] = rd_data[i][0:rd_column/2][rd_row/4:rd_row/2]
+    rd_block[3] = rd_data[i][rd_column/2:rd_column][rd_row/4:rd_row/2]
+    rd_block[4] = rd_data[i][0:rd_column/2][rd_row/2:(3*rd_row)/4]
+    rd_block[5] = rd_data[i][rd_column/2:rd_column][rd_row/2:(3*rd_row)/4]
+    rd_block[6] = rd_data[i][0:rd_column/2][(3*rd_row)/4:rd_row]
+    rd_block[7] = rd_data[i][rd_column/2:rd_column][(3*rd_row)/4:rd_row]
 
     for j in range(8):
         rd_stat_8_split[i][j][0] = np.nanstd(rd_block[j])
@@ -87,11 +87,4 @@ for i in range(pair_number):
         fft = np.abs(np.fft.fft2(rd_block[j]))
         rd_stat_8_split[i][j][4] = np.median(fft)
         rd_stat_8_split[i][j][5] = np.mean(fft)
-        rd_stat_8_split[i][j][6] = np.nanvar(fft)
-#plot statistics
-
-
-#apply machinelearning
-#classify = neural_network.MLPClassifier(solver = 'lbfgs', alpha = 1e-10, hidden_layer_sizes = (100,100), random_state=1)
-#for p in range(20):#per product
-#  
+        rd_stat_8_split[i][j][6] = np.nanva
