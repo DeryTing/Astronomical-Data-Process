@@ -18,8 +18,8 @@ url = 'rd_imdata/' #name of the folder
 for i in range(pair_number):
     rawscienceframe = pyfits.open(url+'rw'+str(i+1)+'.fits')
     reducedscienceframe = pyfits.open(url+'rd'+str(i+1)+'.fits')
-    rw_data = rawscienceframe[0].data
-    rd_data = reducescienceframe[0].data
+    rw_data[i] = rawscienceframe[0].data
+    rd_data[i] = reducescienceframe[0].data
     rawscienceframe.close()
     reducedscienceframe.close()
 
