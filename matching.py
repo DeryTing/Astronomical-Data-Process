@@ -23,7 +23,7 @@ for i in range(pair_number):
     rawscienceframe = pyfits.open('rw_imdata/rw'+str(i+1)+'.fits')
     reducedscienceframe = pyfits.open('rd_imdata/rd'+str(i+1)+'.fits')
     rw_data[i] = np.array(rawscienceframe[0].data)
-    rd_data[i] = np.array(reducescienceframe[0].data)
+    rd_data[i] = np.array(reducedscienceframe[0].data)
     rawscienceframe.close()
     reducedscienceframe.close()
 
