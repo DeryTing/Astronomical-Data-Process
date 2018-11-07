@@ -60,3 +60,18 @@ for i in range(pair_number):
         rw_stat_8_split[i][j][5] = np.mean(fft)
         rw_stat_8_split[i][j][6] = np.nanvar(fft)
 #plot statistics    
+
+
+#apply machinelearning
+#classify = neural_network.MLPClassifier(solver = 'lbfgs', alpha = 1e-10, hidden_layer_sizes = (100,100), random_state=1)
+#for p in range(20):#per product
+#    output[p] = 1
+#    for i in range(20):#per source
+#        static_train_data[i] = [(s_static[i][j]-p_static[p][j])/(s_static[i][j]) for j in range(8)]
+#    classify.fit(static_train_data,output)
+#    output[p] = 0
+
+#for p in range(20):
+#    for i in range(20):
+#        static_pred_data[i] = [(s_static[i][j]-p_static[p][j])/(s_static[i][j]) for j in range(8)]
+#    print(classify.predict(static_pred_data))
