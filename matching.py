@@ -38,16 +38,25 @@ for i in range(pair_number):
     rw_stat[i][5] = np.mean(fft)
     rw_stat[i][6] = np.nanvar(fft)
 
-    rw_row = len(rw_data[i])
-    rw_column = len(rw_data[i][0])
+    rw_row = len(rw_data[i][0])
+    rw_column = len(rw_data[i])
+    print(rw_data[i])
     rw_block[0] = rw_data[i][0:rw_column/2][0:rw_row/4]
-    rw_block[1] = rw_data[i][0:rw_row/4][rw_column/2:rw_column]
+    print(rw_block[0])
+    rw_block[1] = rw_data[i][rw_column/2:rw_column][0:rw_row/4]
+    print(rw_block[1])
     rw_block[2] = rw_data[i][0:rw_column/2][rw_row/4:rw_row/2]
+    print(rw_block[2])
     rw_block[3] = rw_data[i][rw_column/2:rw_column][rw_row/4:rw_row/2]
+    print(rw_block[3])
     rw_block[4] = rw_data[i][0:rw_column/2][rw_row/2:(3*rw_row)/4]
+    print(rw_block[4])
     rw_block[5] = rw_data[i][rw_column/2:rw_column][rw_row/2:(3*rw_row)/4]
+    print(rw_block[5])
     rw_block[6] = rw_data[i][0:rw_column/2][(3*rw_row)/4:rw_row]
+    print(rw_block[6])
     rw_block[7] = rw_data[i][rw_column/2:rw_column][(3*rw_row)/4:rw_row]
+    print(rw_block[7])
 
     for j in range(8):
         rw_stat_8_split[i][j][0] = np.nanstd(rw_block[j])
@@ -87,4 +96,4 @@ for i in range(pair_number):
         fft = np.abs(np.fft.fft2(rd_block[j]))
         rd_stat_8_split[i][j][4] = np.median(fft)
         rd_stat_8_split[i][j][5] = np.mean(fft)
-        rd_stat_8_split[i][j][6] = np.nanva
+        rd_stat_8_split[i][j][6] = np.nanvar
