@@ -17,6 +17,7 @@ rw_stat_8_split = [[[[] for i in range(stat_num)] for j in range(8)] for k in ra
 rd_stat_8_split = [[[[] for i in range(stat_num)] for j in range(8)] for k in range(pair_number)]
 rw_block = [[] for i in range(8)]
 rd_block = [[] for i in range(8)]
+corr_stats = [[] for i in range(stat_num)]
 
 #read data
 for i in range(pair_number):
@@ -89,10 +90,17 @@ for i in range(pair_number):
         rd_stat_8_split[i][j][5] = np.mean(fft)
         rd_stat_8_split[i][j][6] = np.nanvar(fft)
 
-#plot figure
+#calculate correction
 plt.figure(1)
+for i in range(stat_num):
+	corr_stats[i] = np.correlate([rw_stat[j][i] for j in range(20)], [rd_stat[j][i] for j in range(20)])
+plt.plot(corr_stats,range(stat_num))
+plt.show()
+
+#plot figure
+plt.figure(2)
 for i in range(8):
-    for j in range(7):
-        plt.subplot(8,7,j+1+i*7)
+    for j in range(stat_num):
+        plt.subplot(8,stat_num,j+1+i*stat_num)
         plt.scatter([rw_stat_8_split[k][i][j] for k in range(20)],[rd_stat_8_split[k][i][j] for k in range(20)])
 plt.show()
