@@ -91,13 +91,17 @@ for i in range(pair_number):
         rd_stat_8_split[i][j][6] = np.nanvar(fft)
 
 #calculate correction
-plt.figure(1)
+##for split images
 for i in range(stat_num):
 	corr_stats[i] = np.correlate([rw_stat[j][i] for j in range(20)], [rd_stat[j][i] for j in range(20)])
-plt.plot(corr_stats,range(stat_num))
-plt.show()
+print(corr_stats)
 
 #plot figure
+plt.figure(1)
+plt.bar(np.arange(5), corr_stats, 0.3)
+plt.xticks(np.arange(5),('std', 'var', 'max', 'skew', 'median(fft)', 'mean(fft)', 'var(fft)'))
+plt.show()
+
 plt.figure(2)
 for i in range(8):
     for j in range(stat_num):
