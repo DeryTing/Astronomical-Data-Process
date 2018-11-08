@@ -106,6 +106,7 @@ for i in range(pair_number):
         rd_stat_8_split[i][j][5] = np.mean(fft)
         rd_stat_8_split[i][j][6] = np.nanvar(fft)
 
+#plot statistics
 plt.figure(1)
 for i in range(8):
     for j in range(7):
