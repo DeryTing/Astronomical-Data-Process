@@ -8,6 +8,7 @@ from matplotlib import pyplot as plt
 #input
 pair_number = 20
 stat_num = 7 #std, var, max, skew, median(fft), mean(fft), var(fft)
+par_num = 3
 #data
 rw_data = [[] for i in range(pair_number)]
 rd_data = [[] for i in range(pair_number)]
@@ -18,6 +19,7 @@ rd_stat_8_split = [[[[] for i in range(stat_num)] for j in range(8)] for k in ra
 rw_block = [[] for i in range(8)]
 rd_block = [[] for i in range(8)]
 corr_stats = [[] for i in range(stat_num)]
+fit_par = [[[] for i in range(par_num)] for j in range(stat_num)]
 
 #read data
 for i in range(pair_number):
@@ -89,17 +91,21 @@ for i in range(pair_number):
         rd_stat_8_split[i][j][4] = np.median(fft)
         rd_stat_8_split[i][j][5] = np.mean(fft)
         rd_stat_8_split[i][j][6] = np.nanvar(fft)
-
+    print(i)
 #calculate correction
-##for split images
+##for unsplit images
 for i in range(stat_num):
-	corr_stats[i] = np.correlate([rw_stat[j][i] for j in range(20)], [rd_stat[j][i] for j in range(20)])
-print(corr_stats)
-
+	corr_stats[i] = (scipy.stats.pearsonr([rw_stat[j][i] for j in range(20)], [rd_stat[j][i] for j in range(20)]))[0]
 #plot figure
+#def func(x, a, b, c):
+#    return a * np.exp(-b * x) + c
+#for i in range(stat_num):
+#    fit_par[i] = scipy.optimize.curve_fit(func, [rw_stat[j][i] for j in range(20)], [rd_stat[j][i] for j in range(20)])
+#    print(fit_par)
+#    print(str(fit_par[i][0])+'*exp(-'+str(fit_par[i][1])+'*x)+'+str(fit_par[i][2]))
 plt.figure(1)
-plt.bar(np.arange(5), corr_stats, 0.3)
-plt.xticks(np.arange(5),('std', 'var', 'max', 'skew', 'median(fft)', 'mean(fft)', 'var(fft)'))
+plt.bar(np.arange(7), corr_stats)
+plt.xticks(np.arange(7), ('std', 'var', 'max', 'skew', 'median(fft)', 'mean(fft)', 'var(fft)'))
 plt.show()
 
 plt.figure(2)
