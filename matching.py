@@ -97,18 +97,27 @@ for i in range(pair_number):
 for i in range(stat_num):
 	corr_stats[i] = (scipy.stats.pearsonr([rw_stat[j][i] for j in range(20)], [rd_stat[j][i] for j in range(20)]))[0]
 #plot figure
-#def func(x, a, b, c):
-#    return a * np.exp(-b * x) + c
-#for i in range(stat_num):
-#    fit_par[i] = scipy.optimize.curve_fit(func, [rw_stat[j][i] for j in range(20)], [rd_stat[j][i] for j in range(20)])
-#    print(fit_par)
-#    print(str(fit_par[i][0])+'*exp(-'+str(fit_par[i][1])+'*x)+'+str(fit_par[i][2]))
+def func(x, a, b, c):
+    return a * np.exp(b * x) + c
+for i in range(stat_num):
+    fit_par[i] = scipy.optimize.curve_fit(func, [rw_stat[j][i] for j in range(20)], [rd_stat[j][i] for j in range(20)], p0=np.array([2, 0.5, 1]))
+    print(str(fit_par[i][0][0])+'*exp('+str(fit_par[i][0][1])+'*x)+'+str(fit_par[i][0][2]))
+
 plt.figure(1)
+xlabel = [600, 350000, 70000, 300, 250000, 500000, 10000000000000]
+for i in range(stat_num):
+    plt.subplot(4,2,i+1)
+    plt.scatter([rw_stat[j][i] for j in range(20)], [rd_stat[j][i] for j in range(20)])
+#    plt.plot(np.linspace(0, xlabel[i], num =20), func(np.linspace(0, xlabel[i], num =20), fit_par[i][0][0],fit_par[i][0][1],fit_par[i][0][2]), label = 'Fitted Curve')
+    plt.legend()
+plt.show()
+
+plt.figure(2)
 plt.bar(np.arange(7), corr_stats)
 plt.xticks(np.arange(7), ('std', 'var', 'max', 'skew', 'median(fft)', 'mean(fft)', 'var(fft)'))
 plt.show()
 
-plt.figure(2)
+plt.figure(3)
 for i in range(8):
     for j in range(stat_num):
         plt.subplot(8,stat_num,j+1+i*stat_num)
